@@ -8,7 +8,7 @@
 
 Packed with essential features like built-in **Authentication**, **Multi-Tenancy** with Team support, **Role & Permission**, Database, I18n (internationalization), Landing Page, User Dashboard, Form handling, SEO optimization, Logging, Error reporting with [Sentry](https://sentry.io/for/nextjs/?utm_source=github&utm_medium=paid-community&utm_campaign=general-fy25q1-nextjs&utm_content=github-banner-nextjsboilerplate-logo), Testing, Deployment, Monitoring, and **User Impersonation**, this SaaS template provides everything you need to get started.
 
-Designed with developers in mind, this **Next.js Starter Kit** uses TypeScript for type safety and integrates ESLint to maintain code quality, along with Prettier for consistent code formatting. The testing suite combines Vitest and React Testing Library for robust unit testing, while Playwright handles integration and E2E testing. Continuous integration and deployment are managed via GitHub Actions. For user management, authentication is handled by [Clerk](https://go.clerk.com/zGlzydF). For database operations, it uses Drizzle ORM for type-safe database management across popular databases like PostgreSQL, SQLite, and MySQL.
+Designed with developers in mind, this **Next.js Starter Kit** uses TypeScript for type safety and integrates ESLint to maintain code quality, along with Prettier for consistent code formatting. The testing suite combines Vitest and React Testing Library for robust unit testing, while Playwright handles integration and E2E testing. Continuous integration and deployment are managed via GitHub Actions. Authentication is implemented using a lightweight custom solution backed by PostgreSQL via Drizzle ORM.
 
 Whether you're building a new SaaS app or looking for a flexible, **production-ready SaaS template**, this boilerplate has you covered. This free, open-source starter kit has everything you need to accelerate your development and scale your product with ease.
 
@@ -119,11 +119,11 @@ Developer experience first, extremely flexible code structure and only keep what
 - 🔥 Type checking [TypeScript](https://www.typescriptlang.org)
 - 💎 Integrate with [Tailwind CSS](https://tailwindcss.com) and Shadcn UI
 - ✅ Strict Mode for TypeScript and [React](https://react.dev)
-- 🔒 Authentication with [Clerk](https://go.clerk.com/zGlzydF): Sign up, Sign in, Sign out, Forgot password, Reset password, and more.
-- 👤 Passwordless Authentication with Magic Links, Multi-Factor Auth (MFA), Social Auth (Google, Facebook, Twitter, GitHub, Apple, and more), Passwordless login with Passkeys, User Impersonation
+- 🔒 Authentication with a custom session-based system: Sign up, Sign in and Sign out.
+- 👤 Social logins and advanced features can be integrated as needed
 - 👥 Multi-tenancy & team support: create, switch, update organization and invite team members
 - 📝 Role-based access control and permissions
-- 👤 Multi-Factor Auth (MFA), Social Auth (Google, Facebook, Twitter, GitHub, Apple, and more), User Impersonation
+- 👤 Ready for MFA and user impersonation extensions
 - 📦 Type-safe ORM with DrizzleORM, compatible with PostgreSQL, SQLite, and MySQL
 - 💽 Offline and local development database with PGlite
 - 🌐 Multi-language (i18n) with [next-intl](https://next-intl-docs.vercel.app/) and [Crowdin](https://l.crowdin.com/next-js)
@@ -198,16 +198,13 @@ Open http://localhost:3000 with your favorite browser to see your project.
 
 ### Set up authentication
 
-Create a Clerk account at [Clerk.com](https://go.clerk.com/zGlzydF) and create a new application in the Clerk Dashboard. Then, copy the values of `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` into the `.env.local` file (which is not tracked by Git):
+Create a random secret for signing session tokens and add it to `.env.local`:
 
 ```shell
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_pub_key
-CLERK_SECRET_KEY=your_clerk_secret_key
+AUTH_SECRET="your_secret_key"
 ```
 
-In your Clerk Dashboard, you also need to `Enable Organization` by navigating to `Organization management` > `Settings` > `Enable organization`.
-
-Now, you have a fully working authentication system with Next.js: Sign up, Sign in, Sign out, Forgot password, Reset password, Update profile, Update password, Update email, Delete account, and more.
+This repository ships with a minimal authentication system handling sign up and sign in using hashed passwords stored in PostgreSQL.
 
 ### Set up remote database
 
